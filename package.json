@@ -11,5 +11,25 @@
   },
   "private": true,
   "author": "Gavin Abu-Zahra",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gavinabu/randiny.git"
+  },
+  "keywords": [
+    "Random",
+    "RNG",
+    "Random",
+    "Number",
+    "Noise",
+    "Perlin",
+    "Noise",
+    "Static",
+    "Noise",
+    "Randiny"
+  ],
+  "bugs": {
+    "url": "https://github.com/gavinabu/randiny/issues"
+  },
+  "homepage": "https://www.justwhatever.net/projects/randiny"
 }
