@@ -51,8 +51,18 @@ export default class RNG {
       }
       case 2: {
         const [x, y] = coords;
-        const h = hash & 3;
-        return h === 0 ? x + y : h === 1 ? -x + y : h === 2 ? x - y : -x - y;
+        const h = hash & 7;
+        switch (h) {
+          case 0: return  x + y;
+          case 1: return -x + y;
+          case 2: return  x - y;
+          case 3: return -x - y;
+          case 4: return  x;
+          case 5: return -x;
+          case 6: return  y;
+          case 7: return -y;
+        }
+        return 0;
       }
       case 3: {
         const [x, y, z] = coords;
@@ -67,12 +77,27 @@ export default class RNG {
   }
   
   private hash(...coords: number[]): number {
-    let seed = this.seed;
+    let h = this.seed >>> 0;
+    
     for (let i = 0; i < coords.length; i++) {
-      seed = (seed ^ (Math.floor(coords[i]) + 0x9e3779b9)) >>> 0;
-      seed = (1664525 * seed + 1013904223) % 2 ** 32;
+      let k = (coords[i] + i * 374761393) >>> 0;
+      k *= 0xcc9e2d51;
+      k = (k << 15) | (k >>> 17);
+      k *= 0x1b873593;
+      
+      h ^= k;
+      h = (h << 13) | (h >>> 19);
+      h = h * 5 + 0xe6546b64;
     }
-    return seed % 256;
+    
+    h ^= coords.length * 4;
+    h ^= h >>> 16;
+    h *= 0x85ebca6b;
+    h ^= h >>> 13;
+    h *= 0xc2b2ae35;
+    h ^= h >>> 16;
+    
+    return h & 255;
   }
   
   
